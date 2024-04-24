@@ -1,0 +1,56 @@
+<!--This is not neccessery I add this just for a Test. There is no any effect to backend from this code-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <style>
+        input {
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+    <label for="email" class="a">Email: <input type="email" id="email" class="email"></label> <br>
+    <label for="password" class="a">Password: <input type="password" id="password" class="password"></label> <br>
+    <button id="loginButton">Login</button> <br>
+    <div id="message"></div>
+
+    <script>
+        document.getElementById('loginButton').addEventListener('click', login);
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to login');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Handle successful login
+                console.log('Login successful:', data);
+                document.getElementById('message').innerText = 'Login successful!';
+            })
+            .catch(error => {
+                // Handle login error
+                console.error('Login failed:', error);
+                document.getElementById('message').innerText = 'Login failed. Please check your credentials.';
+            });
+        }
+    </script>
+</body>
+</html>
