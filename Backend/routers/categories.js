@@ -12,3 +12,13 @@ router.get('/', async (req, res)=>{
     }
     res.status(200).send(categoryList);
 })
+
+//Get a Category By Id
+router.get('/:id', async (req, res)=>{
+    const category =await Category.findById(req.params.id);
+
+    if(!category){
+        res.status(500).json({message: 'The category with given ID was not available!'});
+    }
+    res.status(200).send(category);
+})
