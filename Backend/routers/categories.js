@@ -38,3 +38,24 @@ router.post('/', async (req, res)=>{
     }
     return res.send(category);
 })
+
+
+
+//Update a Category
+router.put('/:id', async (req, res)=>{
+    const category = await Category.findByIdAndUpdate(
+        req.params.id,
+        {
+            name: req.body.name,
+            icon: req.body.name,
+            color: req.body.color,
+        },
+        {new: true}
+    )
+
+    if(!category){
+        return res.status(404).send('The category cannot be created!')
+    }
+    res.send(category);
+})
+
