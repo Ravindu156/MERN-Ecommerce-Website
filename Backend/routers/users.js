@@ -133,3 +133,16 @@ router.post('/register', async (req,res)=>{
 
     res.send(user);
 })
+router.delete('/:id', (req, res)=>{
+    User.findByIdAndDelete(req.params.id).then(user =>{
+        if(user){
+            return res.status(200).json({success: true, message: 'The user is deleted successfully!'})
+        }
+        else{
+            return res.status(404).json({success: false, message: 'user not found!'})
+        }
+    }).catch(err=>{
+        return res.status(500).json({success: false, error: err})
+    })
+})
+
